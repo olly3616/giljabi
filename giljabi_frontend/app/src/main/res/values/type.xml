@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  타이포 스케일 이식: Giljabi Design System/tokens/typography.css
+  7단계만 사용. 18sp 미만 없음. 한국어는 살짝 좁은 자간이 읽기 좋음.
+  TODO(M1+): Pretendard .ttf 를 res/font/ 에 추가하고 각 스타일에 android:fontFamily 연결.
+-->
+<resources>
+
+    <style name="Text.Giljabi" parent="">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Text.Giljabi.Display">
+        <item name="android:textSize">@dimen/text_display</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">1.25</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="Text.Giljabi.Title">
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">1.3</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="Text.Giljabi.Heading">
+        <item name="android:textSize">@dimen/text_heading</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">1.35</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <!-- 핵심 안내 문구 (말풍선/음성 동기화) -->
+    <style name="Text.Giljabi.Guide">
+        <item name="android:textSize">@dimen/text_guide</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingMultiplier">1.45</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="Text.Giljabi.Button">
+        <item name="android:textSize">@dimen/text_button</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="Text.Giljabi.Body">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingMultiplier">1.6</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="Text.Giljabi.Caption">
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Giljabi" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Trust Blue 가 모든 액션·포커스를 담당 -->
+        <item name="colorPrimary">@color/blue_600</item>
+        <item name="colorOnPrimary">@color/neutral_0</item>
+        <item name="colorPrimaryContainer">@color/blue_50</item>
+        <item name="colorOnPrimaryContainer">@color/blue_700</item>
+
+        <!-- Warm Amber 는 강조·격려 (탭 가능한 컨트롤엔 사용 금지) -->
+        <item name="colorSecondary">@color/amber_400</item>
+        <item name="colorOnSecondary">@color/neutral_900</item>
+
+        <!-- 웜 뉴트럴 배경/표면 -->
+        <item name="android:colorBackground">@color/surface_page</item>
+        <item name="colorSurface">@color/surface_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/border_default</item>
+
+        <item name="colorError">@color/red_600</item>
+
+        <!-- 시스템 바 -->
+        <item name="android:statusBarColor">@color/surface_page</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/surface_page</item>
+    </style>
+
+</resources>
