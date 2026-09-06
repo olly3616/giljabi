@@ -1,0 +1,19 @@
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;
+
+--screen-padding:24px;          /* side gutter on a 360dp Android screen */
+--stack-gap:20px;               /* default vertical rhythm between blocks */
+--gap-in-control:12px;          /* icon-to-label inside a control */
+
+--touch-min:48px;               /* WCAG / Material floor — never smaller */
+--touch-comfortable:64px;       /* default for any primary control */
+--touch-hero:80px;              /* full-width primary CTA and goal cards */
+--icon-sm:24px;--icon-md:32px;--icon-lg:48px;--icon-hero:64px;
+--icon-stroke:2.5px;            /* bold, single weight, no hairlines */
+
+--radius-sm:8px;--radius-md:16px;--radius-lg:24px;--radius-xl:32px;--radius-full:999px;
+--border-width:2px;             /* standard control border */
+--border-width-strong:3px;      /* overlay elements */
+--focus-ring-width:4px;--focus-ring-offset:3px;
+}

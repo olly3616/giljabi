@@ -1,0 +1,32 @@
+# ---- Android / Gradle ----
+.gradle/
+build/
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# Local configuration (machine-specific SDK path, secrets)
+local.properties
+secrets.properties
+keystore.properties
+*.keystore
+*.jks
+
+# ---- IDE ----
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+!.vscode/extensions.json
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Misc ----
+*.hprof
+*.log
+
+# Keep the Gradle wrapper jar (needed to build without a local Gradle install)
+!gradle/wrapper/gradle-wrapper.jar

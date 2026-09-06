@@ -1,0 +1,37 @@
+<!-- @dsCard group="Android app" viewport="1180x820" name="AI 디지털 약자 내비게이터" subtitle="온보딩 → 홈 → 오버레이 안내 → 완료" -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>Giljabi — Android UI kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.446.0/dist/umd/lucide.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;background:var(--surface-sunken);font-family:var(--font-core);color:var(--text-primary)}
+.stage{display:flex;gap:28px;padding:32px;flex-wrap:wrap;justify-content:center}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.cap{font-size:14px;font-weight:700;color:var(--text-secondary);letter-spacing:.02em}
+a{color:var(--blue-700)}a:hover{color:var(--blue-800)}</style>
+</head><body><div id="root"></div>
+<script type="text/babel" src="Phone.jsx"></script>
+<script type="text/babel" src="Screens.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+function Kit(){
+  const [step,setStep]=useState(0);
+  const [live,setLive]=useState("onboarding");
+  const flow={
+    onboarding:<Onboarding step={step} onNext={()=>step<2?setStep(step+1):setLive("home")} onSkip={()=>setLive("home")}/>,
+    home:<Home onPick={()=>setLive("overlay")}/>,
+    overlay:<Overlay onDone={()=>setLive("complete")}/>,
+    complete:<Complete onRestart={()=>{setStep(0);setLive("onboarding")}}/>
+  };
+  return (<div className="stage">
+    <div className="col"><Phone dark={live==="overlay"}>{flow[live]}</Phone>
+      <div className="cap">클릭해서 진행해보세요 — 현재: {live}</div></div>
+    <div className="col"><Phone><Home onPick={()=>{}}/></Phone><div className="cap">홈 — 목표 선택</div></div>
+    <div className="col"><Phone dark><Overlay onDone={()=>{}}/></Phone><div className="cap">오버레이 안내</div></div>
+    <div className="col"><Phone><Complete onRestart={()=>{}}/></Phone><div className="cap">완료</div></div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<Kit/>);
+</script></body></html>

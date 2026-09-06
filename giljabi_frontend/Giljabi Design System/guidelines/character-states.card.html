@@ -1,0 +1,19 @@
+<!-- @dsCard group="Character" viewport="700x260" name="States" subtitle="idle · walk_1 · walk_2 · point · celebrate — 내보낼 PNG 파일명과 1:1" -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;font-family:var(--font-core);background:var(--surface-page);color:var(--text-primary)}
+.lbl{font-size:12px;font-weight:700;color:var(--text-secondary);letter-spacing:.04em;margin:0}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const {Mascot}=window.GiljabiDesignSystem_48e9df;
+const STATES=[["idle","대기 — 2.6초 호흡"],["walk_1","걷기 1프레임"],["walk_2","걷기 2프레임"],["point","가리키기"],["celebrate","축하"]];
+function Card(){return(<div style={{display:"flex",gap:26,alignItems:"flex-end",justifyContent:"space-between",paddingTop:18}}>
+{STATES.map(([s,note])=>(<div key={s} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10,width:120}}>
+<div style={{height:110,display:"flex",alignItems:"flex-end"}}><Mascot state={s} size={92} frozen/></div>
+<div style={{fontSize:15,fontWeight:700}}>{s}</div>
+<div className="lbl" style={{textAlign:"center",lineHeight:1.4}}>{note}</div></div>))}
+</div>);}
+ReactDOM.createRoot(document.getElementById("root")).render(<Card/>);
+</script></body></html>

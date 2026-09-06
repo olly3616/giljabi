@@ -1,0 +1,27 @@
+<!-- @dsCard group="Character" viewport="700x200" name="Walk cycle" subtitle="walk_1 ↔ walk_2 를 350ms 간격으로 번갈아 — 안드로이드는 ImageView 교체" -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;font-family:var(--font-core);background:var(--surface-page);color:var(--text-primary)}
+.lbl{font-size:12px;font-weight:700;color:var(--text-secondary);letter-spacing:.04em;margin:0}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const {Mascot}=window.GiljabiDesignSystem_48e9df;
+function Card(){
+  const [i,setI]=React.useState(0);
+  React.useEffect(()=>{const t=setInterval(()=>setI(v=>v+1),350);return()=>clearInterval(t)},[]);
+  const frame=i%2?"walk_2":"walk_1";
+  return(<div style={{display:"flex",alignItems:"flex-end",gap:40,paddingTop:14}}>
+  <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+    <Mascot state={frame} size={96} frozen/><div style={{fontSize:14,fontWeight:700}}>{frame}</div>
+    <div className="lbl">스프라이트 재생 (350ms)</div></div>
+  <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+    <Mascot state="walk" size={96}/><div style={{fontSize:14,fontWeight:700}}>walk</div>
+    <div className="lbl">CSS 목업 — 참고용</div></div>
+  <p style={{margin:0,maxWidth:300,fontSize:16,lineHeight:1.6,color:"var(--text-secondary)"}}>
+    이동은 <b>900ms</b>(<code>--duration-travel</code>) 동안 <code>--ease-walk</code>로 자연스럽게 가감속합니다.
+    도착하면 곧바로 <code>point</code>로 바꿉니다.</p>
+  </div>);}
+ReactDOM.createRoot(document.getElementById("root")).render(<Card/>);
+</script></body></html>

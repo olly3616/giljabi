@@ -1,0 +1,29 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Overlay layer" subtitle="Mascot · SpeechBubble · HighlightRing · PointerArrow" -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.446.0/dist/umd/lucide.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;font-family:var(--font-core);background:var(--surface-page);color:var(--text-primary)}#root{padding:20px}.lbl{font-size:13px;font-weight:600;color:var(--text-secondary);letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const {Mascot,SpeechBubble,HighlightRing,PointerArrow}=window.GiljabiDesignSystem_48e9df;
+function Card(){return(<div style={{display:"flex",flexDirection:"column",gap:24,maxWidth:660}}>
+<div style={{position:"relative",padding:"20px 20px 24px",borderRadius:"var(--radius-lg)",background:"linear-gradient(135deg,#2b3a55 0%,#57493c 100%)"}}>
+<p className="lbl" style={{color:"rgba(255,255,255,.75)"}}>임의의 앱 화면 위</p>
+<div style={{display:"flex",alignItems:"flex-end",gap:18}}>
+<SpeechBubble tail="bottom" tailOffset="40px" width={280}>화면 아래 승차권 예매를 눌러주세요.</SpeechBubble>
+<Mascot state="point" size={88}/>
+<PointerArrow direction="right" size={56}/>
+<div style={{paddingTop:26}}>
+<HighlightRing shape="pill" label="여기예요">
+<span style={{display:"inline-flex",alignItems:"center",justifyContent:"center",height:52,padding:"0 22px",borderRadius:999,background:"#fff",color:"#111",fontWeight:700,fontSize:18}}>승차권 예매</span>
+</HighlightRing></div>
+</div></div>
+<div style={{display:"flex",alignItems:"center",gap:28}}>
+{["idle","walk","point","celebrate"].map(s=>(<div key={s} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+<Mascot state={s} size={72}/><span style={{fontSize:14,fontWeight:600,color:"var(--text-secondary)"}}>{s}</span></div>))}
+</div></div>);}
+ReactDOM.createRoot(document.getElementById("root")).render(<Card/>);
+</script></body></html>

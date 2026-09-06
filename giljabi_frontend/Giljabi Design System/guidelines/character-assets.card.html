@@ -1,0 +1,29 @@
+<!-- @dsCard group="Character" viewport="700x330" name="Asset spec" subtitle="투명 배경 PNG 우선. JPEG·GIF 금지, Lottie는 여유 시." -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;font-family:var(--font-core);background:var(--surface-page);color:var(--text-primary)}
+.lbl{font-size:12px;font-weight:700;color:var(--text-secondary);letter-spacing:.04em;margin:0}</style></head><body>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;font-size:15px;line-height:1.6">
+<div style="padding:16px;border-radius:16px;background:#fff;border:2px solid var(--green-500)">
+<div style="font-weight:800;color:var(--text-success);margin-bottom:8px">권장 — 투명 배경 PNG (MVP)</div>
+<ul style="margin:0;padding-left:20px">
+<li><code>idle.png</code> / <code>walk_1.png</code> / <code>walk_2.png</code> / <code>point.png</code> (필수 4장)</li>
+<li><code>celebrate.png</code> (완료 화면용, 권장)</li>
+<li>정사각 캔버스, 여백 8% 이상, xxhdpi 기준 288&times;288px</li>
+<li>외곽선 3dp 상당의 굵기를 이미지에 포함</li>
+<li>그림자는 이미지에 굽지 말고 안드로이드 <code>elevation</code>으로</li>
+</ul></div>
+<div style="padding:16px;border-radius:16px;background:#fff;border:2px solid var(--red-500)">
+<div style="font-weight:800;color:var(--text-danger);margin-bottom:8px">금지 · 비추천</div>
+<ul style="margin:0;padding-left:20px">
+<li><b>JPEG 금지</b> — 투명 미지원, 캐릭터 뒤 흰 네모가 생김</li>
+<li><b>GIF 비추천</b> — 투명 경계가 지저분하고 안드로이드 지원 약함</li>
+<li>WebP는 PNG 대안으로 가능하나 데모 단계 이점 적음</li>
+<li>Lottie(JSON)는 여유 있을 때 — 가볍고 부드럽지만 제작 난이도 있음</li>
+</ul></div>
+<div style="grid-column:1/-1;padding:16px;border-radius:16px;background:var(--surface-brand-soft);border:2px solid var(--blue-200)">
+<b>일관성이 관건.</b> 다섯 상태가 같은 캐릭터로 보여야 합니다. 이미지 생성으로 뽑는다면 얼굴 비율(눈 간격·입 크기), 몸 색, 외곽선 두께, 볼 위치를 매 컷 동일하게 고정하고, 자세와 표정만 바꾸세요. 위 <b>States</b> 카드가 그 기준입니다.
+</div></div></body></html>

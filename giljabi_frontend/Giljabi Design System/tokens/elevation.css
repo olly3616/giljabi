@@ -1,0 +1,12 @@
+:root{
+/* In-app: soft, low, warm-shadowed. Cards sit on the page, they don't float. */
+--shadow-card:0 2px 0 0 var(--neutral-200),0 4px 12px rgba(42,39,33,.06);
+--shadow-raised:0 4px 16px rgba(42,39,33,.10);
+--shadow-pressed:inset 0 2px 6px rgba(42,39,33,.14);
+
+/* Overlay: must survive any host background — hard outline + deep drop. */
+--shadow-overlay:0 8px 28px rgba(10,15,30,.35),0 2px 6px rgba(10,15,30,.25);
+--shadow-mascot:0 10px 24px rgba(10,15,30,.30);
+--outline-overlay:3px solid var(--overlay-bubble-outline);
+--ring-highlight:0 0 0 6px var(--overlay-highlight),0 0 0 14px var(--overlay-highlight-glow);
+}

@@ -1,0 +1,18 @@
+:root{
+/* Slower than platform default on purpose: nothing should surprise the user. */
+--duration-instant:120ms; /* @kind other */
+--duration-fast:220ms; /* @kind other */      /* press feedback */
+--duration-base:380ms; /* @kind other */      /* fades, bubble in/out */
+--duration-slow:600ms; /* @kind other */      /* screen transitions */
+--duration-travel:900ms; /* @kind other */    /* character walking to a new target */
+--duration-breathe:2600ms; /* @kind other */  /* idle loop */
+
+--ease-standard:cubic-bezier(.4,0,.2,1); /* @kind other */
+--ease-enter:cubic-bezier(.16,.84,.44,1); /* @kind other */   /* decelerate in, no overshoot */
+--ease-exit:cubic-bezier(.4,0,1,1); /* @kind other */
+--ease-walk:cubic-bezier(.45,.05,.55,.95); /* @kind other */  /* gentle ease both ends, like steps */
+--ease-celebrate:cubic-bezier(.34,1.4,.64,1); /* @kind other */ /* the ONLY bouncy easing, completion only */
+
+--press-scale:.97; /* @kind other */          /* press = shrink + darken, never colour-only */
+--highlight-pulse:1800ms; /* @kind other */
+}

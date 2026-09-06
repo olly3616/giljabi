@@ -1,0 +1,34 @@
+<!-- @dsCard group="Character" viewport="700x760" name="Overlay stress test" subtitle="일부러 복잡한 배경 4종 위 — 말풍선·링·화살표가 모두 판별되는지" -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;font-family:var(--font-core);background:var(--surface-page);color:var(--text-primary)}
+.lbl{font-size:12px;font-weight:700;color:var(--text-secondary);letter-spacing:.04em;margin:0}</style>
+<style>.scene{position:relative;height:320px;border-radius:20px;overflow:hidden;border:1px solid var(--border-default)}
+.txt{position:absolute;inset:0;padding:14px 16px;font-size:13px;line-height:1.5;color:#333;column-count:3;column-gap:14px}</style>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const {Mascot,SpeechBubble,HighlightRing,PointerArrow}=window.GiljabiDesignSystem_48e9df;
+const SCENES=[["사진 같은 복잡한 배경","background:conic-gradient(from 20deg at 30% 40%,#e94f37,#f6c453,#3fa34d,#2f6fb3,#8e44ad,#e94f37),radial-gradient(circle at 70% 70%,rgba(255,255,255,.6),transparent 60%);"],["밝은 지도 화면","background:repeating-linear-gradient(38deg,#f4efe4 0 26px,#e6dfcd 26px 30px),repeating-linear-gradient(-52deg,rgba(120,160,110,.5) 0 40px,rgba(255,255,255,0) 40px 92px);"],["어두운 동영상 화면","background:radial-gradient(circle at 25% 30%,#3b4c6b,#0b0d12 70%),repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 2px,transparent 2px 9px);"],["글자 많은 문서","background:#fff;"]];
+const filler="확인 안내 사항 이용 약관 동의 항목 상세 내용 보기 결제 수단 선택 좌석 지정 예약 변경 환불 규정 고객센터 문의 ".repeat(14);
+function Scene({title,css,busyText,children}){return(<div style={{display:"flex",flexDirection:"column",gap:8}}>
+  <p className="lbl">{title}</p>
+  <div className="scene" style={{background:css.replace("background:","").replace(/;$/,"")}}>
+    {busyText?<div className="txt">{filler}</div>:null}{children}</div></div>);}
+function Card(){return(<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
+{SCENES.map(([title,css],i)=>(
+  <Scene key={title} title={title} css={css} busyText={i===3}>
+    <div style={{position:"absolute",left:14,top:18}}>
+      <SpeechBubble tail="bottom" tailOffset="46px" width={250} tone={i===1?"accent":"default"}>화면 아래 승차권 예매를 눌러주세요.</SpeechBubble></div>
+    <div style={{position:"absolute",left:18,top:150}}><Mascot state="point" size={82}/></div>
+    <div style={{position:"absolute",left:120,top:196}}><PointerArrow direction="right" size={52}/></div>
+    <div style={{position:"absolute",right:26,bottom:38}}>
+      <HighlightRing shape="pill" label="여기예요">
+        <span style={{display:"inline-flex",alignItems:"center",justifyContent:"center",height:52,padding:"0 20px",borderRadius:999,background:"rgba(255,255,255,.9)",color:"#111",fontWeight:700,fontSize:17}}>승차권 예매</span>
+      </HighlightRing></div>
+  </Scene>))}
+</div>);}
+ReactDOM.createRoot(document.getElementById("root")).render(<Card/>);
+</script></body></html>

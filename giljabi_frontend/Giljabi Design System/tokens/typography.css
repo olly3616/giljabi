@@ -1,0 +1,16 @@
+:root{
+/* Sizes are sp on Android and px 1:1 on the web mirrors.
+   Floor is 18sp — nothing in this system may render body copy below it. */
+--font-size-display:40px;--line-height-display:1.25;--font-weight-display:800;
+--font-size-title:32px;--line-height-title:1.3;--font-weight-title:700;
+--font-size-heading:26px;--line-height-heading:1.35;--font-weight-heading:700;
+--font-size-guide:24px;--line-height-guide:1.45;--font-weight-guide:600;   /* 핵심 안내 문구 */
+--font-size-button:22px;--line-height-button:1.2;--font-weight-button:700;
+--font-size-body:20px;--line-height-body:1.6;--font-weight-body:400;
+--font-size-body-strong:20px;--font-weight-body-strong:600;
+--font-size-caption:18px;--line-height-caption:1.5;--font-weight-caption:500; /* absolute floor */
+
+--letter-spacing-tight:-0.02em;   /* display + title */
+--letter-spacing-normal:-0.01em;  /* everything else — Korean reads better slightly tight */
+--text-measure:22ch;              /* max line length for guidance copy */
+}
