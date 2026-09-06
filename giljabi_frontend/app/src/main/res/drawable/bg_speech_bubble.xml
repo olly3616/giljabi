@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  오버레이 말풍선 배경. 디자인 시스템: 불투명 흰 채움 + 3dp 잉크 외곽선 + 큰 반경.
+  (꼬리는 M2 에서 방향 가변으로 추가)
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/overlay_bubble_bg" />
+    <corners android:radius="@dimen/radius_lg" />
+    <stroke
+        android:width="@dimen/border_width_strong"
+        android:color="@color/overlay_bubble_outline" />
+</shape>

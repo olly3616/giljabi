@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">길잡이</string>
-    <string name="home_greeting">안녕하세요,\n무엇을 도와드릴까요?</string>
-    <string name="home_subtitle">도움이 필요한 일을 골라주세요.</string>
-    <string name="scaffold_note">M0 스캐폴딩 — 홈 화면은 M2에서 목표 선택 UI로 완성됩니다.</string>
+
+    <!-- 접근성 서비스 설명 (시스템 설정에 노출됨) -->
+    <string name="accessibility_service_description">길잡이가 화면을 읽어, 다음에 눌러야 할 곳을 하나씩 안내합니다.</string>
+
+    <!-- 온보딩 / 권한 화면 -->
+    <string name="setup_title">길잡이 시작하기</string>
+    <string name="setup_intro">안내를 시작하려면\n아래 두 가지를 켜주세요.</string>
+
+    <string name="perm_a11y_title">① 화면 읽기 켜기</string>
+    <string name="perm_a11y_desc">길잡이가 지금 화면을 보고 안내할 수 있어요.</string>
+    <string name="btn_open_a11y">화면 읽기 설정 열기</string>
+
+    <string name="perm_overlay_title">② 화면 위 표시 켜기</string>
+    <string name="perm_overlay_desc">안내를 다른 앱 화면 위에 띄울 수 있어요.</string>
+    <string name="btn_open_overlay">화면 위 표시 설정 열기</string>
+
+    <string name="status_on">켜짐</string>
+    <string name="status_off">꺼짐</string>
+    <string name="status_label">상태: %1$s</string>
+
+    <string name="all_ready">두 가지가 모두 켜졌어요.\n이제 다른 앱을 쓰다가 막히면 길잡이가 나타나요.</string>
+    <string name="m1_note">확인용: 다른 앱에서 잠시(약 5초) 화면을 그대로 두면 길잡이가 나타나 도움을 물어봐요.</string>
+
+    <!-- 오버레이 (마스코트 도움 제안) -->
+    <string name="mascot_desc">길잡이 안내원</string>
+    <string name="help_offer_bubble">도움이 필요하세요?</string>
+    <string name="help_offer_tts">도움이 필요하세요? 제가 화면을 도와드릴까요?</string>
 </resources>

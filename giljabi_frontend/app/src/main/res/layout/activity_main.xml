@@ -1,42 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surface_page"
-    android:padding="@dimen/screen_padding">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/greeting"
-        style="@style/Text.Giljabi.Title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/home_greeting"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/subtitle"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding">
 
-    <TextView
-        android:id="@+id/subtitle"
-        style="@style/Text.Giljabi.Body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/stack_gap"
-        android:textColor="@color/text_secondary"
-        android:text="@string/home_subtitle"
-        app:layout_constraintTop_toBottomOf="@id/greeting"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <TextView
+            style="@style/Text.Giljabi.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="@string/setup_title" />
 
-    <TextView
-        style="@style/Text.Giljabi.Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/scaffold_note"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            style="@style/Text.Giljabi.Body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3"
+            android:textColor="@color/text_secondary"
+            android:text="@string/setup_intro" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- ① 접근성 권한 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            app:cardBackgroundColor="@color/surface_card"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:strokeColor="@color/border_subtle"
+            app:strokeWidth="@dimen/border_width">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_6">
+
+                <TextView
+                    style="@style/Text.Giljabi.Heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perm_a11y_title" />
+
+                <TextView
+                    style="@style/Text.Giljabi.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:textColor="@color/text_secondary"
+                    android:text="@string/perm_a11y_desc" />
+
+                <TextView
+                    android:id="@+id/tvA11yStatus"
+                    style="@style/Text.Giljabi.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3"
+                    tools:text="상태: 꺼짐" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnA11y"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/touch_comfortable"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:text="@string/btn_open_a11y"
+                    android:textSize="@dimen/text_button"
+                    app:cornerRadius="@dimen/radius_md" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ② 오버레이 권한 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stack_gap"
+            app:cardBackgroundColor="@color/surface_card"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:strokeColor="@color/border_subtle"
+            app:strokeWidth="@dimen/border_width">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_6">
+
+                <TextView
+                    style="@style/Text.Giljabi.Heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perm_overlay_title" />
+
+                <TextView
+                    style="@style/Text.Giljabi.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:textColor="@color/text_secondary"
+                    android:text="@string/perm_overlay_desc" />
+
+                <TextView
+                    android:id="@+id/tvOverlayStatus"
+                    style="@style/Text.Giljabi.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3"
+                    tools:text="상태: 꺼짐" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOverlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/touch_comfortable"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:text="@string/btn_open_overlay"
+                    android:textSize="@dimen/text_button"
+                    app:cornerRadius="@dimen/radius_md" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvAllReady"
+            style="@style/Text.Giljabi.Guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:textColor="@color/text_success"
+            android:visibility="gone"
+            android:text="@string/all_ready"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/Text.Giljabi.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="@string/m1_note" />
+
+    </LinearLayout>
+</ScrollView>
