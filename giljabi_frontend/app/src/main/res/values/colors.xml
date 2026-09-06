@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  디자인 토큰 이식: Giljabi Design System/tokens/colors.css
+  Trust Blue = 액션/포커스/캐릭터 · Warm Amber = 강조/포인터("여기 보세요" 전용, 앱 내 버튼엔 안 씀)
+-->
+<resources>
+
+    <!-- ===== Base — Trust Blue ===== -->
+    <color name="blue_50">#EEF3FF</color>
+    <color name="blue_100">#DCE6FF</color>
+    <color name="blue_200">#B9CCFF</color>
+    <color name="blue_300">#8AABFF</color>
+    <color name="blue_400">#4E7DF0</color>
+    <color name="blue_500">#2A62E6</color>
+    <color name="blue_600">#1A4FD0</color>
+    <color name="blue_700">#123CA6</color>
+    <color name="blue_800">#0D2C7B</color>
+    <color name="blue_900">#0A1F57</color>
+
+    <!-- ===== Base — Warm Amber ===== -->
+    <color name="amber_50">#FFF7EA</color>
+    <color name="amber_100">#FFECCB</color>
+    <color name="amber_200">#FFD895</color>
+    <color name="amber_300">#FFC24F</color>
+    <color name="amber_400">#F5A524</color>
+    <color name="amber_500">#D98200</color>
+    <color name="amber_600">#B26600</color>
+    <color name="amber_700">#8A4F00</color>
+
+    <!-- ===== Base — Warm Neutral ===== -->
+    <color name="neutral_0">#FFFFFF</color>
+    <color name="neutral_50">#FAF9F7</color>
+    <color name="neutral_100">#F2F0EC</color>
+    <color name="neutral_200">#E4E1DA</color>
+    <color name="neutral_300">#CFCBC2</color>
+    <color name="neutral_400">#A8A29A</color>
+    <color name="neutral_500">#7C766D</color>
+    <color name="neutral_600">#5E594F</color>
+    <color name="neutral_700">#413D36</color>
+    <color name="neutral_800">#2A2721</color>
+    <color name="neutral_900">#1A1815</color>
+
+    <!-- ===== Base — Status ===== -->
+    <color name="green_50">#E9F7EF</color>
+    <color name="green_500">#12894A</color>
+    <color name="green_600">#0E6E3B</color>
+    <color name="green_700">#0A5730</color>
+    <color name="red_50">#FDECEA</color>
+    <color name="red_500">#C42B1C</color>
+    <color name="red_600">#A32115</color>
+    <color name="red_700">#7E1A10</color>
+
+    <!-- ===== Semantic — surfaces ===== -->
+    <color name="surface_page">@color/neutral_50</color>
+    <color name="surface_card">@color/neutral_0</color>
+    <color name="surface_sunken">@color/neutral_100</color>
+    <color name="surface_brand">@color/blue_600</color>
+    <color name="surface_brand_soft">@color/blue_50</color>
+    <color name="surface_accent_soft">@color/amber_50</color>
+    <color name="surface_disabled">@color/neutral_200</color>
+    <color name="surface_overlay_scrim">#8C1A1815</color> <!-- 55% ink -->
+
+    <!-- ===== Semantic — text ===== -->
+    <color name="text_primary">@color/neutral_900</color>     <!-- 15.9:1 AAA -->
+    <color name="text_secondary">@color/neutral_600</color>   <!-- 7.4:1  AAA -->
+    <color name="text_on_brand">@color/neutral_0</color>      <!-- 8.0:1 on blue_600 AAA -->
+    <color name="text_on_accent">@color/neutral_900</color>   <!-- 10.4:1 on amber_300 AAA -->
+    <color name="text_brand">@color/blue_700</color>         <!-- 9.0:1 AAA -->
+    <color name="text_success">@color/green_600</color>
+    <color name="text_danger">@color/red_600</color>
+    <color name="text_disabled">@color/neutral_500</color>
+
+    <!-- ===== Semantic — borders ===== -->
+    <color name="border_subtle">@color/neutral_200</color>
+    <color name="border_default">@color/neutral_300</color>
+    <color name="border_strong">@color/neutral_700</color>
+    <color name="border_brand">@color/blue_600</color>
+    <color name="border_focus">@color/blue_700</color>
+    <color name="border_ink">@color/neutral_900</color>      <!-- overlay outline -->
+
+    <!-- ===== Semantic — overlay layer (must read on ANY host screen) ===== -->
+    <color name="overlay_bubble_bg">@color/neutral_0</color>
+    <color name="overlay_bubble_ink">@color/neutral_900</color>
+    <color name="overlay_bubble_outline">@color/neutral_900</color>
+    <color name="overlay_highlight">@color/amber_400</color>
+    <color name="overlay_highlight_glow">#73F5A524</color>   <!-- 45% amber_400 -->
+    <color name="overlay_arrow">@color/amber_400</color>
+
+    <!-- ===== Launcher ===== -->
+    <color name="ic_launcher_background">@color/blue_600</color>
+
+</resources>

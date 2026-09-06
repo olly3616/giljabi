@@ -17,7 +17,7 @@ keystore.properties
 *.iml
 *.ipr
 *.iws
-.vscode/
+.vscode/*
 !.vscode/extensions.json
 
 # ---- OS ----

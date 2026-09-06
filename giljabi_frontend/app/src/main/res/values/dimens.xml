@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 디자인 토큰 이식: Giljabi Design System/tokens/spacing.css + typography.css -->
+<resources>
+
+    <!-- ===== Spacing (4px base) ===== -->
+    <dimen name="space_1">4dp</dimen>
+    <dimen name="space_2">8dp</dimen>
+    <dimen name="space_3">12dp</dimen>
+    <dimen name="space_4">16dp</dimen>
+    <dimen name="space_5">20dp</dimen>
+    <dimen name="space_6">24dp</dimen>
+    <dimen name="space_8">32dp</dimen>
+    <dimen name="space_10">40dp</dimen>
+    <dimen name="space_12">48dp</dimen>
+    <dimen name="space_16">64dp</dimen>
+    <dimen name="space_20">80dp</dimen>
+
+    <dimen name="screen_padding">24dp</dimen>   <!-- 화면 좌우 여백 -->
+    <dimen name="stack_gap">20dp</dimen>        <!-- 블록 간 세로 간격 -->
+    <dimen name="gap_in_control">12dp</dimen>   <!-- 아이콘-라벨 간격 -->
+
+    <!-- ===== Touch targets ===== -->
+    <dimen name="touch_min">48dp</dimen>          <!-- WCAG/Material 최소 -->
+    <dimen name="touch_comfortable">64dp</dimen>  <!-- 기본 주요 컨트롤 -->
+    <dimen name="touch_hero">80dp</dimen>         <!-- 전폭 CTA·목표 카드 -->
+
+    <!-- ===== Icon sizes / stroke ===== -->
+    <dimen name="icon_sm">24dp</dimen>
+    <dimen name="icon_md">32dp</dimen>
+    <dimen name="icon_lg">48dp</dimen>
+    <dimen name="icon_hero">64dp</dimen>
+    <dimen name="icon_stroke">2.5dp</dimen>
+
+    <!-- ===== Radii ===== -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">16dp</dimen>   <!-- 컨트롤 -->
+    <dimen name="radius_lg">24dp</dimen>   <!-- 카드 -->
+    <dimen name="radius_xl">32dp</dimen>
+    <dimen name="radius_full">999dp</dimen>
+
+    <!-- ===== Borders / focus ===== -->
+    <dimen name="border_width">2dp</dimen>          <!-- 표준 컨트롤 -->
+    <dimen name="border_width_strong">3dp</dimen>   <!-- 오버레이 요소 -->
+    <dimen name="focus_ring_width">4dp</dimen>
+    <dimen name="focus_ring_offset">3dp</dimen>
+
+    <!-- ===== Type scale (sp). 절대 최소 18sp ===== -->
+    <dimen name="text_display">40sp</dimen>
+    <dimen name="text_title">32sp</dimen>
+    <dimen name="text_heading">26sp</dimen>
+    <dimen name="text_guide">24sp</dimen>    <!-- 핵심 안내 문구 -->
+    <dimen name="text_button">22sp</dimen>
+    <dimen name="text_body">20sp</dimen>
+    <dimen name="text_caption">18sp</dimen>  <!-- 절대 최소 -->
+
+</resources>

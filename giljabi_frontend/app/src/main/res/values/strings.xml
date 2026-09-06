@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">길잡이</string>
+    <string name="home_greeting">안녕하세요,\n무엇을 도와드릴까요?</string>
+    <string name="home_subtitle">도움이 필요한 일을 골라주세요.</string>
+    <string name="scaffold_note">M0 스캐폴딩 — 홈 화면은 M2에서 목표 선택 UI로 완성됩니다.</string>
+</resources>
