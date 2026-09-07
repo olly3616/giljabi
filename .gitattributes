@@ -1,6 +1,10 @@
 # Normalize line endings — keep the repo consistent across OSes.
 * text=auto eol=lf
 
+# GitHub Linguist: 디자인 시스템은 웹 참조본(JSX/HTML/CSS)이라 언어 통계에서 제외.
+# 실제 앱/서버는 Kotlin 이므로 Kotlin 이 주 언어로 표시되도록 한다.
+giljabi_frontend/Giljabi*System/** linguist-vendored
+
 # Windows-only scripts keep CRLF
 *.bat text eol=crlf
 *.cmd text eol=crlf

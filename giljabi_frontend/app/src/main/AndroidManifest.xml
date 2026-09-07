@@ -3,6 +3,13 @@
 
     <!-- 오버레이('손'): 다른 앱 위에 캐릭터·말풍선 표시. 사용자가 설정에서 직접 켜야 함. -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 백엔드 프록시(/decide) 호출용 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Android 11+ 패키지 가시성: 안내 대상 앱을 열 수 있도록 선언 -->
+    <queries>
+        <package android:name="com.korail.talk" />
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -10,6 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Giljabi">
 
         <activity
