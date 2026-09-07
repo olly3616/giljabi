@@ -10,6 +10,11 @@ object GuidanceState {
     var activeGoal: String? = null
         private set
 
+    /** 안내를 수행할 대상 앱 패키지. 이 앱을 보고 있을 때만 안내한다. */
+    @Volatile
+    var targetPackage: String? = null
+        private set
+
     private val _progress = mutableListOf<String>()
 
     /** 지금까지 안내한 단계(target_text) 기록의 복사본. */
@@ -20,8 +25,9 @@ object GuidanceState {
         get() = activeGoal != null
 
     @Synchronized
-    fun start(goal: String) {
+    fun start(goal: String, targetPackage: String) {
         activeGoal = goal
+        this.targetPackage = targetPackage
         _progress.clear()
     }
 
@@ -33,6 +39,7 @@ object GuidanceState {
     @Synchronized
     fun stop() {
         activeGoal = null
+        targetPackage = null
         _progress.clear()
     }
 }

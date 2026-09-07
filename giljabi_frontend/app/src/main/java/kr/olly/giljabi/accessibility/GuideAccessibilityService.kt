@@ -41,6 +41,7 @@ class GuideAccessibilityService : AccessibilityService() {
 
     // 안내 모드 상태
     private var lastSignature: String? = null
+    private var lastSpoken: String? = null   // 마지막으로 읽어준 안내 문구 (중복 음성 방지)
     private var deciding = false
 
     // 유휴 제안 모드 상태
@@ -56,7 +57,8 @@ class GuideAccessibilityService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
         val pkg = event.packageName?.toString()
-        if (pkg == packageName) return // 우리 앱(오버레이 포함) 이벤트 무시
+        // 우리 앱·키보드·시스템 UI 이벤트는 무시 (안내 대상 아님)
+        if (isIgnored(pkg)) return
 
         when (event.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
@@ -71,17 +73,37 @@ class GuideAccessibilityService : AccessibilityService() {
     private fun isForeignApp(): Boolean =
         currentPackage != null && currentPackage != packageName
 
+    /** 우리 앱·입력기(키보드)·시스템 UI 는 안내 대상에서 제외. */
+    private fun isIgnored(pkg: String?): Boolean {
+        if (pkg.isNullOrBlank() || pkg == packageName) return true
+        return pkg.contains("inputmethod") ||
+            pkg.contains("honeyboard") ||
+            pkg == "com.android.systemui"
+    }
+
     private fun onScreenChanged() {
-        if (GuidanceState.isActive && isForeignApp()) {
-            // 안내 모드: 유휴 제안 타이머/마스코트 정리 후, 화면 정착 시 판단.
-            cancelIdleOffer()
-            handler.removeCallbacks(guideRunnable)
-            handler.postDelayed(guideRunnable, SETTLE_MS)
-        } else {
-            // 유휴 제안 모드(M1)
-            handler.removeCallbacks(guideRunnable)
-            lastSignature = null
-            onUserActivity()
+        when {
+            // 안내 모드: 목표 대상 앱(코레일)을 보고 있음 → 화면 정착 시 판단.
+            GuidanceState.isActive && currentPackage == GuidanceState.targetPackage -> {
+                cancelIdleOffer()
+                handler.removeCallbacks(guideRunnable)
+                handler.postDelayed(guideRunnable, SETTLE_MS)
+            }
+            // 목표는 있으나 다른 앱을 봄 → 안내 오버레이 숨기고 대기(대상 앱 복귀 시 재개).
+            GuidanceState.isActive -> {
+                handler.removeCallbacks(guideRunnable)
+                lastSignature = null
+                lastSpoken = null
+                overlay?.hide()
+                speaker?.stop()
+            }
+            // 목표 없음 → 유휴 제안 모드(M1).
+            else -> {
+                handler.removeCallbacks(guideRunnable)
+                lastSignature = null
+                lastSpoken = null
+                onUserActivity()
+            }
         }
     }
 
@@ -94,13 +116,19 @@ class GuideAccessibilityService : AccessibilityService() {
         val elements = ScreenReader.read(rootInActiveWindow)
         val signature = elements.asSequence()
             .map { it.text }.filter { it.isNotBlank() }.joinToString("|")
-        if (signature.isEmpty() || signature == lastSignature) return
+        if (signature.isEmpty() || signature == lastSignature) {
+            Log.d(TAG, "판단 생략 (요소 ${elements.size}개, 시그니처 동일/빈값)")
+            return
+        }
         lastSignature = signature
         deciding = true
+        Log.d(TAG, "runGuiding 시작: pkg=$currentPackage, 요소 ${elements.size}개, 목표=$goal")
 
         scope.launch {
             try {
+                Log.d(TAG, "AI 호출 시작")
                 val decision = aiClient.decideNextStep(goal, elements, GuidanceState.progress)
+                Log.d(TAG, "AI 응답: target='${decision.targetText}', 도달=${decision.isGoalReached}, 안내='${decision.guidanceText}'")
                 if (decision.isGoalReached) {
                     overlay?.showCelebrate(getString(R.string.guide_done))
                     speaker?.speak(getString(R.string.guide_done_tts))
@@ -110,13 +138,21 @@ class GuideAccessibilityService : AccessibilityService() {
                     val target = elements.firstOrNull { it.text == decision.targetText }
                     if (target != null) {
                         overlay?.showGuide(target.bounds, decision.guidanceText)
-                        speaker?.speak(decision.guidanceText)
-                        GuidanceState.addProgress(decision.targetText)
+                        // 같은 안내면 위치만 갱신하고 음성은 반복하지 않는다.
+                        if (decision.guidanceText != lastSpoken) {
+                            speaker?.speak(decision.guidanceText)
+                            lastSpoken = decision.guidanceText
+                            GuidanceState.addProgress(decision.targetText)
+                            Log.d(TAG, "안내: '${decision.targetText}' bounds=${target.bounds}")
+                        }
                     } else {
-                        Log.w(TAG, "대상 '${decision.targetText}' 을 화면에서 못 찾음")
-                        lastSignature = null // 다음 이벤트에서 재시도 허용
+                        Log.w(TAG, "대상 '${decision.targetText}' 을 화면에서 못 찾음. 화면 텍스트=${elements.map { it.text }.filter { it.isNotBlank() }}")
+                        lastSignature = null
                     }
                 }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                Log.w(TAG, "판단 취소됨(서비스 재시작 등)")
+                lastSignature = null
             } catch (e: Exception) {
                 Log.e(TAG, "안내 판단 실패", e)
                 lastSignature = null

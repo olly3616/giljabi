@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             toast(getString(R.string.need_permissions_first))
             return
         }
-        GuidanceState.start(getString(R.string.goal_ticket_label))
+        GuidanceState.start(getString(R.string.goal_ticket_label), KORAIL_PACKAGE)
         toast(getString(R.string.goal_started))
         openKorail()
     }

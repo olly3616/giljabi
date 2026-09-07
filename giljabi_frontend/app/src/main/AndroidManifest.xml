@@ -6,6 +6,11 @@
     <!-- 백엔드 프록시(/decide) 호출용 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Android 11+ 패키지 가시성: 안내 대상 앱을 열 수 있도록 선언 -->
+    <queries>
+        <package android:name="com.korail.talk" />
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

@@ -1,11 +1,11 @@
 package kr.olly.giljabi.overlay
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
+import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -13,9 +13,12 @@ import kr.olly.giljabi.R
 
 /**
  * 눌러야 할 대상을 감싸는 앰버 하이라이트 링(+글로우). 화면 절대 좌표를 그대로 사용.
+ * XML 인플레이트를 위해 (Context, AttributeSet) 생성자를 @JvmOverloads 로 제공한다.
  */
-@SuppressLint("ViewConstructor")
-class HighlightRingView(context: Context) : View(context) {
+class HighlightRingView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : View(context, attrs) {
 
     private var target: Rect? = null
 

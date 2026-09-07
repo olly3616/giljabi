@@ -46,6 +46,14 @@ fun Application.module(apiKey: String) {
     routing {
         get("/health") { call.respondText("ok") }
 
+        get("/models") {
+            runCatching { gemini.listModels() }
+                .onSuccess { call.respondText(it, io.ktor.http.ContentType.Application.Json) }
+                .onFailure {
+                    call.respond(HttpStatusCode.InternalServerError, ErrorResponse(it.message ?: "error"))
+                }
+        }
+
         post("/decide") {
             val req = call.receive<DecideRequest>()
             runCatching { gemini.decide(req) }

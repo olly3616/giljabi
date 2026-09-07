@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.provider.Settings
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -48,11 +49,22 @@ class OverlayController(private val context: Context) {
     /** 안내(F4): 대상에 하이라이트 + 마스코트를 대상 옆으로 이동 + 말풍선. */
     fun showGuide(target: Rect, message: String) {
         val view = ensure(Kind.GUIDE, R.layout.overlay_guide) ?: return
-        view.findViewById<HighlightRingView>(R.id.ring)?.setTarget(target)
+        val ring = view.findViewById<HighlightRingView>(R.id.ring)
         val bubble = view.findViewById<TextView>(R.id.bubble)
         val mascot = view.findViewById<ImageView>(R.id.mascot)
         bubble?.text = message
-        view.post { positionNearTarget(view, mascot, bubble, target) }
+        view.post {
+            // 접근성 좌표는 화면 절대 좌표. 오버레이 창이 화면 top 과 어긋나면 보정한다.
+            val loc = IntArray(2)
+            view.getLocationOnScreen(loc)
+            val adj = Rect(
+                target.left - loc[0], target.top - loc[1],
+                target.right - loc[0], target.bottom - loc[1],
+            )
+            Log.d("Giljabi.Overlay", "window loc=${loc[0]},${loc[1]} target=$target adj=$adj")
+            ring?.setTarget(adj)
+            positionNearTarget(view, mascot, bubble, adj)
+        }
     }
 
     /** 축하(목표 도달): 우하단 마스코트 + 축하 문구. */
@@ -104,24 +116,24 @@ class OverlayController(private val context: Context) {
         val screenW = root.width
         val screenH = root.height
         val gap = dp(8f)
+        val mW = mascot.width; val mH = mascot.height
+        val bW = bubble.width; val bH = bubble.height
 
-        // 마스코트: 대상 오른쪽 아래에 배치 후 화면 안으로 클램프
-        var mx = target.right.toFloat()
-        var my = target.bottom.toFloat() + gap
-        if (mx + mascot.width > screenW) mx = target.left.toFloat() - mascot.width
-        if (mx < 0f) mx = 0f
-        if (my + mascot.height > screenH) my = target.top.toFloat() - mascot.height - gap
-        if (my < 0f) my = 0f
-        mascot.translationX = mx
-        mascot.translationY = my
+        // 대상 아래에 [마스코트 → 말풍선] 을 세로로 쌓을 공간이 있으면 아래로, 없으면 위로.
+        // 말풍선을 마스코트 너머(대상 반대쪽)에 두어 하이라이트 링을 가리지 않게 한다.
+        val mascotY: Float
+        val bubbleY: Float
+        if (screenH - (target.bottom + gap) >= mH + gap + bH) {
+            mascotY = target.bottom + gap
+            bubbleY = mascotY + mH + gap
+        } else {
+            mascotY = target.top - gap - mH
+            bubbleY = mascotY - gap - bH
+        }
 
-        // 말풍선: 마스코트 위, 오른쪽 정렬. 위 공간 없으면 아래로.
-        var by = my - bubble.height - gap
-        if (by < 0f) by = my + mascot.height + gap
-        var bx = mx + mascot.width - bubble.width
-        if (bx < 0f) bx = 0f
-        if (bx + bubble.width > screenW) bx = (screenW - bubble.width).toFloat()
-        bubble.translationX = bx
-        bubble.translationY = by
+        mascot.translationX = (target.centerX() - mW / 2f).coerceIn(0f, (screenW - mW).toFloat())
+        mascot.translationY = mascotY.coerceAtLeast(0f)
+        bubble.translationX = (target.centerX() - bW / 2f).coerceIn(0f, (screenW - bW).toFloat())
+        bubble.translationY = bubbleY.coerceAtLeast(0f)
     }
 }
