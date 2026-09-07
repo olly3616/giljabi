@@ -87,6 +87,7 @@
     <color name="overlay_arrow">@color/amber_400</color>
 
     <!-- ===== Launcher ===== -->
-    <color name="ic_launcher_background">@color/blue_600</color>
+    <!-- 마스코트(파란 몸통)가 잘 보이도록 따뜻한 크림색 배경 -->
+    <color name="ic_launcher_background">@color/amber_50</color>
 
 </resources>

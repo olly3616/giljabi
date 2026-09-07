@@ -21,10 +21,19 @@
             </intent-filter>
         </activity>
 
-        <!--
-          접근성 서비스('눈')는 M1(feat/accessibility-reader) 브랜치에서 선언한다:
-          <service android:name=".accessibility.GuideAccessibilityService" ... >
-        -->
+        <!-- 접근성 서비스('눈'): 화면 UI 트리를 읽어 요소·좌표를 수집한다. -->
+        <service
+            android:name=".accessibility.GuideAccessibilityService"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
 
     </application>
 

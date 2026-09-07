@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  오버레이 콘텐츠: 화면 우하단에 마스코트 + 그 위 말풍선.
+  창 자체는 전체화면·터치통과(OverlayController). 이 뷰는 접근성 트리에 노출 안 함.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:importantForAccessibility="no">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/space_4"
+        android:layout_marginBottom="@dimen/space_16"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/bubble"
+            style="@style/Text.Giljabi.Guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_2"
+            android:background="@drawable/bg_speech_bubble"
+            android:elevation="8dp"
+            android:maxWidth="260dp"
+            android:paddingHorizontal="@dimen/space_5"
+            android:paddingVertical="@dimen/space_4"
+            android:textColor="@color/overlay_bubble_ink" />
+
+        <ImageView
+            android:id="@+id/mascot"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="end"
+            android:contentDescription="@string/mascot_desc"
+            android:elevation="8dp"
+            android:src="@drawable/ic_mascot" />
+    </LinearLayout>
+</FrameLayout>
