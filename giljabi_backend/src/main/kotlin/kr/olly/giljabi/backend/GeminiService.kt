@@ -3,12 +3,17 @@ package kr.olly.giljabi.backend
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -18,17 +23,23 @@ import kotlinx.serialization.json.Json
  */
 class GeminiService(private val apiKey: String) {
 
-    private val model = System.getenv("GEMINI_MODEL") ?: "gemini-2.5-flash"
+    private val model = System.getenv("GEMINI_MODEL") ?: "gemini-3.6-flash"
     private val json = Json { ignoreUnknownKeys = true }
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) { json(json) }
+        install(HttpTimeout) {
+            requestTimeoutMillis = 60_000
+            socketTimeoutMillis = 60_000
+            connectTimeoutMillis = 15_000
+        }
     }
 
     suspend fun decide(req: DecideRequest): Decision {
         require(apiKey.isNotBlank()) { "GEMINI_API_KEY 가 설정되지 않았습니다" }
 
-        val url = "https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent?key=$apiKey"
+        // 키는 URL 쿼리 대신 헤더로 — URL/로그/에러 메시지에 키가 노출되지 않도록.
+        val url = "https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent"
 
         val body = GeminiRequest(
             systemInstruction = Content(parts = listOf(Part(SYSTEM_PROMPT))),
@@ -40,15 +51,32 @@ class GeminiService(private val apiKey: String) {
             ),
         )
 
-        val resp: GeminiResponse = client.post(url) {
-            contentType(ContentType.Application.Json)
-            setBody(body)
-        }.body()
+        // 과부하(503)·레이트리밋(429) 은 일시적이므로 짧은 백오프로 재시도한다.
+        var lastError = "알 수 없는 오류"
+        repeat(MAX_RETRIES) { attempt ->
+            val httpResp = client.post(url) {
+                header("x-goog-api-key", apiKey)
+                contentType(ContentType.Application.Json)
+                setBody(body)
+            }
+            val raw = httpResp.bodyAsText()
 
-        val jsonText = resp.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
-            ?: error("Gemini 응답이 비어 있습니다")
+            if (httpResp.status.isSuccess()) {
+                val resp = json.decodeFromString(GeminiResponse.serializer(), raw)
+                val jsonText = resp.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
+                    ?: error("Gemini 응답에 후보/텍스트가 없습니다. 원본=$raw")
+                return json.decodeFromString(Decision.serializer(), jsonText)
+            }
 
-        return json.decodeFromString(Decision.serializer(), jsonText)
+            val code = httpResp.status.value
+            if (code == 503 || code == 429) {
+                lastError = "Gemini HTTP ${httpResp.status}: $raw"
+                delay(RETRY_DELAY_MS * (attempt + 1))
+            } else {
+                error("Gemini HTTP ${httpResp.status}: $raw")
+            }
+        }
+        error("Gemini 재시도 $MAX_RETRIES 회 모두 실패: $lastError")
     }
 
     private fun buildUserPrompt(req: DecideRequest): String {
@@ -66,6 +94,9 @@ class GeminiService(private val apiKey: String) {
     }
 
     companion object {
+        private const val MAX_RETRIES = 3
+        private const val RETRY_DELAY_MS = 1000L
+
         private val SYSTEM_PROMPT = """
             당신은 스마트폰이 서툰 사용자를 돕는 화면 안내원입니다.
             사용자의 '목표', '현재 화면 요소 목록', '지금까지 진행'을 보고
