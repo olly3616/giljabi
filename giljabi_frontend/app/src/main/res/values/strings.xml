@@ -28,4 +28,16 @@
     <string name="mascot_desc">길잡이 안내원</string>
     <string name="help_offer_bubble">도움이 필요하세요?</string>
     <string name="help_offer_tts">도움이 필요하세요? 제가 화면을 도와드릴까요?</string>
+
+    <!-- 목표 선택 / 안내 -->
+    <string name="goal_section_title">무엇을 도와드릴까요?</string>
+    <string name="goal_ticket_label">기차표 예매하기</string>
+    <string name="goal_started">코레일 앱을 열어주세요.\n길잡이가 하나씩 안내할게요.</string>
+    <string name="goal_started_tts">코레일 앱을 열어주세요. 제가 하나씩 안내할게요.</string>
+    <string name="need_permissions_first">먼저 위의 두 가지를 모두 켜주세요.</string>
+    <string name="korail_not_found">코레일 앱이 없어요. 먼저 설치해주세요.</string>
+
+    <!-- 안내 완료 -->
+    <string name="guide_done">다 하셨어요!\n정말 잘하셨어요.</string>
+    <string name="guide_done_tts">다 하셨어요. 정말 잘하셨어요.</string>
 </resources>
