@@ -18,6 +18,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import kr.olly.giljabi.R
+import kr.olly.giljabi.settings.SettingsStore
 
 /**
  * 오버레이('손') 창 관리. 세 가지 표시 모드:
@@ -49,7 +50,24 @@ class OverlayController(private val context: Context) {
     /** 유휴 제안(M1): 우하단 마스코트 + 말풍선. */
     fun showHelpOffer(message: String) {
         val view = ensure(Kind.OFFER, R.layout.overlay_mascot) ?: return
+        view.findViewById<ImageView>(R.id.mascot)?.setImageResource(R.drawable.mascot_idle)
         view.findViewById<TextView>(R.id.bubble)?.text = message
+        applyOverlaySettings(view, 120f)
+    }
+
+    /** 마스코트 크기 · 말풍선 표시/글씨크기 설정을 적용한다. */
+    private fun applyOverlaySettings(view: View, mascotBaseDp: Float) {
+        view.findViewById<TextView>(R.id.bubble)?.let { b ->
+            b.visibility = if (SettingsStore.bubble(context)) View.VISIBLE else View.GONE
+            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f * SettingsStore.bubbleScale(context))
+        }
+        view.findViewById<ImageView>(R.id.mascot)?.let { m ->
+            val px = dp(mascotBaseDp * SettingsStore.mascotScale(context)).toInt()
+            val lp = m.layoutParams
+            lp.width = px
+            lp.height = px
+            m.layoutParams = lp
+        }
     }
 
     /**
@@ -62,6 +80,7 @@ class OverlayController(private val context: Context) {
         val bubble = view.findViewById<TextView>(R.id.bubble)
         val mascot = view.findViewById<ImageView>(R.id.mascot)
         bubble?.text = message
+        applyOverlaySettings(view, 96f)
         view.post {
             if (target == null) {
                 ring?.clear()
@@ -86,6 +105,7 @@ class OverlayController(private val context: Context) {
         val view = ensure(Kind.CELEBRATE, R.layout.overlay_mascot) ?: return
         view.findViewById<ImageView>(R.id.mascot)?.setImageResource(R.drawable.mascot_celebrate)
         view.findViewById<TextView>(R.id.bubble)?.text = message
+        applyOverlaySettings(view, 120f)
     }
 
     fun hide() {

@@ -16,6 +16,7 @@ import kr.olly.giljabi.ai.AiClient
 import kr.olly.giljabi.ai.GeminiBackendClient
 import kr.olly.giljabi.guidance.GuidanceState
 import kr.olly.giljabi.model.ScreenElement
+import kr.olly.giljabi.settings.SettingsStore
 import kr.olly.giljabi.overlay.OverlayController
 import kr.olly.giljabi.tts.Speaker
 
@@ -268,6 +269,7 @@ class GuideAccessibilityService : AccessibilityService() {
 
     private fun onIdle() {
         if (mascotShown || GuidanceState.isActive || !isForeignApp()) return
+        if (!SettingsStore.floating(this)) return // 마스코트 상시 표시 꺼짐
         overlay?.showHelpOffer(getString(R.string.help_offer_bubble))
         speaker?.speak(getString(R.string.help_offer_tts))
         mascotShown = true
