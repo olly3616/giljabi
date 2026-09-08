@@ -46,14 +46,22 @@ class OverlayController(private val context: Context) {
         view.findViewById<TextView>(R.id.bubble)?.text = message
     }
 
-    /** 안내(F4): 대상에 하이라이트 + 마스코트를 대상 옆으로 이동 + 말풍선. */
-    fun showGuide(target: Rect, message: String) {
+    /**
+     * 안내(F4): 대상에 하이라이트 + 마스코트를 대상 옆으로 이동 + 말풍선.
+     * target 이 null 이면(화면에서 대상을 못 찾은 경우) 링 없이 하단 중앙에 문구만 안내한다.
+     */
+    fun showGuide(target: Rect?, message: String) {
         val view = ensure(Kind.GUIDE, R.layout.overlay_guide) ?: return
         val ring = view.findViewById<HighlightRingView>(R.id.ring)
         val bubble = view.findViewById<TextView>(R.id.bubble)
         val mascot = view.findViewById<ImageView>(R.id.mascot)
         bubble?.text = message
         view.post {
+            if (target == null) {
+                ring?.clear()
+                positionAtBottom(view, mascot, bubble)
+                return@post
+            }
             // 접근성 좌표는 화면 절대 좌표. 오버레이 창이 화면 top 과 어긋나면 보정한다.
             val loc = IntArray(2)
             view.getLocationOnScreen(loc)
@@ -135,5 +143,18 @@ class OverlayController(private val context: Context) {
         mascot.translationY = mascotY.coerceAtLeast(0f)
         bubble.translationX = (target.centerX() - bW / 2f).coerceIn(0f, (screenW - bW).toFloat())
         bubble.translationY = bubbleY.coerceAtLeast(0f)
+    }
+
+    /** 대상을 못 찾았을 때: 하단 중앙에 마스코트 + 말풍선(위)만 표시. */
+    private fun positionAtBottom(root: View, mascot: View?, bubble: View?) {
+        mascot ?: return
+        bubble ?: return
+        val gap = dp(8f)
+        val cx = root.width / 2f
+        val mascotY = root.height - dp(200f) - mascot.height
+        mascot.translationX = (cx - mascot.width / 2f).coerceIn(0f, (root.width - mascot.width).toFloat())
+        mascot.translationY = mascotY.coerceAtLeast(0f)
+        bubble.translationX = (cx - bubble.width / 2f).coerceIn(0f, (root.width - bubble.width).toFloat())
+        bubble.translationY = (mascotY - gap - bubble.height).coerceAtLeast(0f)
     }
 }
