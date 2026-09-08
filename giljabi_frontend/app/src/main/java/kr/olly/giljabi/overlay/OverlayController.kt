@@ -1,11 +1,16 @@
 package kr.olly.giljabi.overlay
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +36,7 @@ class OverlayController(private val context: Context) {
 
     private var root: View? = null
     private var kind: Kind? = null
+    private var breathAnim: Animator? = null
 
     val canDrawOverlays: Boolean
         get() = Settings.canDrawOverlays(context)
@@ -82,6 +88,8 @@ class OverlayController(private val context: Context) {
     }
 
     fun hide() {
+        breathAnim?.cancel()
+        breathAnim = null
         root?.let { runCatching { windowManager.removeView(it) } }
         root = null
         kind = null
@@ -99,7 +107,24 @@ class OverlayController(private val context: Context) {
         windowManager.addView(view, overlayParams())
         root = view
         kind = target
+        view.findViewById<ImageView>(R.id.mascot)?.let { startBreathing(it) }
         return view
+    }
+
+    /** 마스코트가 살아있는 느낌: 2.6초 주기로 부드럽게 커졌다 작아지는 숨쉬기(디자인 시스템). */
+    private fun startBreathing(mascot: View) {
+        breathAnim?.cancel()
+        breathAnim = ObjectAnimator.ofPropertyValuesHolder(
+            mascot,
+            PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 1.06f),
+            PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 1.06f),
+        ).apply {
+            duration = 1300
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            interpolator = AccelerateDecelerateInterpolator()
+            start()
+        }
     }
 
     private fun overlayParams() = WindowManager.LayoutParams(
