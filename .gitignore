@@ -30,3 +30,6 @@ Thumbs.db
 
 # Keep the Gradle wrapper jar (needed to build without a local Gradle install)
 !gradle/wrapper/gradle-wrapper.jar
+
+# 리뷰용 대용량 압축/원본 (저장소에 두지 않음)
+*.zip
