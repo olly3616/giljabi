@@ -51,7 +51,30 @@ cd C:\practices\giljabi\giljabi_backend
 폰과 PC가 같은 Wi-Fi 일 때, 앱은 PC 의 LAN IP 로 접속한다 (예: `http://192.168.219.100:8080`).
 앱의 `local.properties` 에 `giljabi.backendUrl` 로 설정한다 (M2b).
 
+## 배포 (Render)
+
+심사 기간 동안 상시 접속 가능한 공개 서버가 필요하다. 저장소 루트의 `render.yaml` Blueprint 로 배포한다.
+
+1. https://render.com 로그인 → **New → Blueprint** → 이 GitHub 저장소 선택
+2. Render 가 `render.yaml` 을 읽어 `giljabi_backend` 만 Docker 로 빌드한다.
+3. **Environment** 에서 `GEMINI_API_KEY` 에 실제 키 입력 (저장소엔 저장 안 됨).
+4. 배포 완료 후 URL 확인 (예: `https://giljabi-backend.onrender.com`).
+   - 헬스체크: `GET /health` → `ok`
+5. 앱의 `local.properties` 에 `giljabi.backendUrl` 을 이 URL 로 바꿔 재빌드.
+
+> ⚠️ **무료 플랜 콜드스타트:** 15분 유휴 시 잠들어 첫 요청이 30~60초 걸린다.
+> 심사 기간엔 [cron-job.org](https://cron-job.org) 등에서 `GET /health` 를 5~10분마다 호출해 깨워둔다.
+> (또는 유료 플랜으로 상시 가동.)
+
+Docker 로 로컬 실행도 가능:
+```powershell
+cd giljabi_backend
+docker build -t giljabi-backend .
+docker run -e GEMINI_API_KEY="키" -p 8080:8080 giljabi-backend
+```
+
 ## 설계 메모
 
 - 좌표(bounds)는 서버로 보내지 않는다. AI 는 text 로만 대상을 고르고, 앱이 좌표를 확정한다.
 - 응답은 `responseSchema` 로 JSON 강제 → 파싱 안정성 확보.
+- `$PORT` 환경변수 바인딩(호스트 주입), `/health` 헬스체크 제공.

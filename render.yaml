@@ -1,0 +1,17 @@
+# Render Blueprint — 백엔드(giljabi_backend)만 배포한다(모노레포 하위 디렉터리).
+# https://render.com → New → Blueprint → 이 저장소 선택
+services:
+  - type: web
+    name: giljabi-backend
+    runtime: docker
+    rootDir: giljabi_backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    plan: free
+    autoDeploy: true
+    envVars:
+      # 대시보드에서 실제 키를 입력(저장소엔 저장 안 됨).
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-flash-lite-latest
