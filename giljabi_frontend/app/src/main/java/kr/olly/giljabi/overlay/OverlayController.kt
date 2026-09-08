@@ -81,9 +81,10 @@ class OverlayController(private val context: Context) {
         }
     }
 
-    /** 축하(목표 도달): 우하단 마스코트 + 축하 문구. */
+    /** 축하(목표 도달): 우하단 마스코트(축하 포즈) + 축하 문구. */
     fun showCelebrate(message: String) {
         val view = ensure(Kind.CELEBRATE, R.layout.overlay_mascot) ?: return
+        view.findViewById<ImageView>(R.id.mascot)?.setImageResource(R.drawable.mascot_celebrate)
         view.findViewById<TextView>(R.id.bubble)?.text = message
     }
 
