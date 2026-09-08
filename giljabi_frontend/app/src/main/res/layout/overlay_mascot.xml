@@ -37,6 +37,7 @@
             android:layout_gravity="end"
             android:contentDescription="@string/mascot_desc"
             android:elevation="8dp"
-            android:src="@drawable/ic_mascot" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/mascot_idle" />
     </LinearLayout>
 </FrameLayout>
