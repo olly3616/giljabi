@@ -40,4 +40,28 @@
     <!-- 안내 완료 -->
     <string name="guide_done">다 하셨어요!\n정말 잘하셨어요.</string>
     <string name="guide_done_tts">다 하셨어요. 정말 잘하셨어요.</string>
+
+    <!-- 설정 -->
+    <string name="settings_title">설정</string>
+    <string name="settings_open">설정</string>
+    <string name="set_mascot_section">마스코트</string>
+    <string name="set_floating">화면에 항상 표시</string>
+    <string name="set_floating_desc">도움이 필요할 때 마스코트가 나타나요.</string>
+    <string name="set_mascot_size">마스코트 크기</string>
+    <string name="set_bubble_section">말풍선</string>
+    <string name="set_bubble_show">말풍선 표시</string>
+    <string name="set_bubble_size">글씨 크기</string>
+    <string name="set_marker_section">화면 표시(마커)</string>
+    <string name="set_marker_color">색상</string>
+    <string name="set_marker_line">선 종류</string>
+    <string name="set_line_solid">실선</string>
+    <string name="set_line_dashed">점선</string>
+    <string name="set_voice_section">음성</string>
+    <string name="set_voice_on">음성 안내</string>
+    <string name="set_voice_rate">말하기 속도</string>
+    <string name="set_tts_open">목소리(음성 엔진) 설정 열기</string>
+    <string name="set_small">작게</string>
+    <string name="set_large">크게</string>
+    <string name="set_slow">느리게</string>
+    <string name="set_fast">빠르게</string>
 </resources>

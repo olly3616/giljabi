@@ -177,5 +177,15 @@
             android:layout_marginTop="@dimen/space_8"
             android:text="@string/m1_note" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSettings"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_comfortable"
+            android:layout_marginTop="@dimen/space_5"
+            android:text="@string/settings_open"
+            android:textSize="@dimen/text_button"
+            app:cornerRadius="@dimen/radius_md" />
+
     </LinearLayout>
 </ScrollView>

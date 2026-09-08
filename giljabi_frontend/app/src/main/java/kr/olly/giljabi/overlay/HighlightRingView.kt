@@ -2,17 +2,19 @@ package kr.olly.giljabi.overlay
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import androidx.core.content.ContextCompat
-import kr.olly.giljabi.R
+import kr.olly.giljabi.settings.SettingsStore
 
 /**
- * 눌러야 할 대상을 감싸는 앰버 하이라이트 링(+글로우). 화면 절대 좌표를 그대로 사용.
+ * 눌러야 할 대상을 감싸는 하이라이트 링(+글로우). 화면 절대 좌표를 그대로 사용.
+ * 색상·선 종류(실선/점선)는 사용자 설정(SettingsStore)에서 읽어 적용한다.
  * XML 인플레이트를 위해 (Context, AttributeSet) 생성자를 @JvmOverloads 로 제공한다.
  */
 class HighlightRingView @JvmOverloads constructor(
@@ -28,12 +30,10 @@ class HighlightRingView @JvmOverloads constructor(
     private val glowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = dp(10f)
-        color = ContextCompat.getColor(context, R.color.overlay_highlight_glow)
     }
     private val ringPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = dp(3f)
-        color = ContextCompat.getColor(context, R.color.overlay_highlight)
     }
 
     init {
@@ -42,12 +42,23 @@ class HighlightRingView @JvmOverloads constructor(
 
     fun setTarget(rect: Rect) {
         target = Rect(rect)
+        applySettings()
         invalidate()
     }
 
     fun clear() {
         target = null
         invalidate()
+    }
+
+    /** 설정에서 마커 색·선 종류를 읽어 페인트에 반영. */
+    private fun applySettings() {
+        val color = SettingsStore.markerColor(context)
+        ringPaint.color = color
+        ringPaint.pathEffect =
+            if (SettingsStore.markerDashed(context)) DashPathEffect(floatArrayOf(dp(11f), dp(9f)), 0f) else null
+        // 글로우는 마커 색의 반투명 버전
+        glowPaint.color = Color.argb(115, Color.red(color), Color.green(color), Color.blue(color))
     }
 
     override fun onDraw(canvas: Canvas) {
