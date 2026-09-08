@@ -44,6 +44,8 @@ class GuideAccessibilityService : AccessibilityService() {
     private var currentPackage: String? = null
 
     private val scrollRunnable = Runnable { relocateTarget() }
+    private val repromptRunnable = Runnable { onReprompt() }
+    private var repromptCount = 0
 
     // 안내 모드 상태
     private var shownSignature: String? = null      // 현재 안내를 표시 중인 화면
@@ -106,6 +108,21 @@ class GuideAccessibilityService : AccessibilityService() {
         if (target != null) overlay?.showGuide(target.bounds, guidance) else overlay?.hide()
     }
 
+    /** 같은 화면에 머무르면 일정 시간마다 부드럽게 다시 안내(어르신 배려, 최대 MAX_REPROMPT 회). */
+    private fun scheduleReprompt() {
+        repromptCount = 0
+        handler.removeCallbacks(repromptRunnable)
+        handler.postDelayed(repromptRunnable, REPROMPT_MS)
+    }
+
+    private fun onReprompt() {
+        val guidance = shownGuidance ?: return
+        if (!guidingThisApp() || repromptCount >= MAX_REPROMPT) return
+        repromptCount++
+        speaker?.speak("천천히 하셔도 돼요. $guidance")
+        handler.postDelayed(repromptRunnable, REPROMPT_MS)
+    }
+
     private fun guidingThisApp(): Boolean =
         GuidanceState.isActive && currentPackage == GuidanceState.targetPackage
 
@@ -150,7 +167,9 @@ class GuideAccessibilityService : AccessibilityService() {
         shownTargetText = null
         shownGuidance = null
         lastSpoken = null
+        repromptCount = 0
         handler.removeCallbacks(scrollRunnable)
+        handler.removeCallbacks(repromptRunnable)
         if (hideOverlay) {
             overlay?.hide()
             speaker?.stop()
@@ -224,6 +243,7 @@ class GuideAccessibilityService : AccessibilityService() {
                 if (target == null && decision.targetText.isNotBlank()) {
                     Log.w(TAG, "대상 '${decision.targetText}' 못 찾음 — 문구만 표시")
                 }
+                scheduleReprompt() // 안 누르고 가만히 있으면 재안내(B-3)
             } catch (e: kotlinx.coroutines.CancellationException) {
                 Log.w(TAG, "판단 취소됨")
             } catch (e: Exception) {
@@ -279,6 +299,8 @@ class GuideAccessibilityService : AccessibilityService() {
         private const val SETTLE_MS = 650L
         private const val SCROLL_MS = 180L
         private const val DONE_HIDE_MS = 6000L
+        private const val REPROMPT_MS = 14000L
+        private const val MAX_REPROMPT = 3
         private val DIGITS = Regex("[0-9]")
     }
 }
